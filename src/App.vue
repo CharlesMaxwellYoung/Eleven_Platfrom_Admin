@@ -1,8 +1,19 @@
 <template>
     <div id="app">
-     <router-view/>
+        <router-view/>
     </div>
 </template>
 <style lang="scss">
-
+.md-18 {
+  font-size: 18px;
+}
+.md-24 {
+  font-size: 24px;
+}
+.md-36 {
+  font-size: 36px;
+}
+.md-48 {
+  font-size: 48px;
+}
 </style>

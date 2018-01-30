@@ -1,16 +1,17 @@
 <template>
- <div class="login-container">
+  <div class="login-container">
     <transition name="form-fade" mode="in-out">
       <div class="login-form" v-show="showLogin">
         <div class="login-logo">
-          <img src="../../assets/images/logo.png"> <span>eleven console</span>
+          <img src="../../assets/images/logo.png">
+          <span>eleven console</span>
         </div>
         <el-form :model="formLogin" :rules="rulesLogin" ref="formLogin">
           <el-form-item prop="username">
-            <el-input type="text" v-model="formLogin.username" auto-complete="off" @keyup.enter.native="submitForm('formLogin')"></el-input>
+            <el-input type="text" v-model="formLogin.username" auto-complete="off" @keyup.enter.native="submitForm('formLogin')" placeholder="请输入用户名"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input type="password" v-model="formLogin.password" auto-complete="off" @keyup.enter.native="submitForm('formLogin')" ></el-input>
+            <el-input type="password" v-model="formLogin.password" auto-complete="off" @keyup.enter.native="submitForm('formLogin')" placeholder="请输入密码"></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('formLogin')">登录</el-button>
@@ -24,161 +25,148 @@
 </template>
 
 <script>
-import THREE from "~/app/lib/three";
-import UserApi from "~/app/services/loginServices";
+import THREE from '~/app/lib/three'
+import UserApi from '~/app/services/loginServices'
 export default {
-  name: "login",
+  name: 'login',
   data() {
     return {
       formLogin: {
-        username: "",
-        password: ""
+        username: '',
+        password: ''
       },
       rulesLogin: {
         username: [
-          { required: true, message: "请输入用户名", trigger: "blur" }
+          { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
       showLogin: false
-    };
+    }
   },
   created() {
-    const that = this;
-    let $sto = that.$sto;
-    let $conf = that.$conf;
-    let cookies = $sto.get($conf.constant.cookie);
-    that.formLogin.username = (cookies && cookies.username) || "";
-    console.log(process);
+    const that = this
+    let $sto = that.$sto
+    let $conf = that.$conf
+    let cookies = $sto.get($conf.constant.cookie)
+    that.formLogin.username = (cookies && cookies.username) || ''
+    console.log(process)
   },
   mounted() {
-    const that = this;
-    that.showLogin = true;
-    that.init3D();
+    const that = this
+    that.showLogin = true
+    that.init3D()
   },
   methods: {
     submitForm(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
           // 验证通过，前去登录
-          this.goLogin();
+          this.goLogin()
         }
-      });
+      })
     },
     resetForm(name) {
       // 重置表单
-      const that = this;
-      this.$refs[name].resetFields();
+      const that = this
+      this.$refs[name].resetFields()
     },
     async goLogin() {
       // 登录
-      const that = this;
-      const formLogin = that.formLogin;
-      let { username, password } = formLogin;
+      const that = this
+      const formLogin = that.formLogin
+      let { username, password } = formLogin
       const res = await UserApi.goLogin({
         userName: username,
         userPassword: password
-      });
-      if (res.length > 0) {
-        let $sto = that.$sto;
-        let $conf = that.$conf;
-        // 模拟登录成功返回的Token
-        let cookies = $sto.get($conf.constant.cookie);
-        if (!cookies) {
-          cookies = {
-            token: new Date().getTime(),
-            username
-          };
-        } else {
-          cookies.token = new Date().getTime();
-        }
-        $sto.set($conf.constant.cookie, cookies);
-        that.$router.push({ path: "/quick" });
+      })
+      if (res.success) {
+        that.$router.push({ path: '/quick' })
       } else {
-        that.$message.error("用户名或密码错误！");
+        that.$message.error(res.error)
       }
     },
     init3D() {
       // 初始化3D动画
-      var SCREEN_WIDTH = window.innerWidth;
-      var SCREEN_HEIGHT = window.innerHeight;
-      var SEPARATION = 90;
-      var AMOUNTX = 50;
-      var AMOUNTY = 50;
-      var container;
-      var particles, particle;
-      var count;
-      var camera;
-      var scene;
-      var renderer;
-      var mouseX = 0;
-      var mouseY = 0;
-      var windowHalfX = window.innerWidth / 2;
-      var windowHalfY = window.innerHeight / 2;
-      init();
-      this.interval = setInterval(loop, 1000 / 60);
+      var SCREEN_WIDTH = window.innerWidth
+      var SCREEN_HEIGHT = window.innerHeight
+      var SEPARATION = 90
+      var AMOUNTX = 50
+      var AMOUNTY = 50
+      var container
+      var particles, particle
+      var count
+      var camera
+      var scene
+      var renderer
+      var mouseX = 0
+      var mouseY = 0
+      var windowHalfX = window.innerWidth / 2
+      var windowHalfY = window.innerHeight / 2
+      init()
+      this.interval = setInterval(loop, 1000 / 60)
       function init() {
-        container = document.createElement("div");
-        container.style.position = "relative";
-        container.style.top = "200px";
-        document.getElementById("loginThree").appendChild(container);
-        camera = new THREE.Camera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000);
-        camera.position.z = 1000;
-        scene = new THREE.Scene();
-        renderer = new THREE.CanvasRenderer();
-        renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        particles = new Array();
-        var i = 0;
-        var material = new THREE.ParticleCircleMaterial(0x097bdb, 1);
+        container = document.createElement('div')
+        container.style.position = 'relative'
+        container.style.top = '200px'
+        document.getElementById('loginThree').appendChild(container)
+        camera = new THREE.Camera(75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000)
+        camera.position.z = 1000
+        scene = new THREE.Scene()
+        renderer = new THREE.CanvasRenderer()
+        renderer.setSize(SCREEN_WIDTH, SCREEN_HEIGHT)
+        particles = new Array()
+        var i = 0
+        var material = new THREE.ParticleCircleMaterial(0x097bdb, 1)
         for (var ix = 0; ix < AMOUNTX; ix++) {
           for (var iy = 0; iy < AMOUNTY; iy++) {
-            particle = particles[i++] = new THREE.Particle(material);
-            particle.position.x = ix * SEPARATION - AMOUNTX * SEPARATION / 2;
-            particle.position.z = iy * SEPARATION - AMOUNTY * SEPARATION / 2;
-            scene.add(particle);
+            particle = particles[i++] = new THREE.Particle(material)
+            particle.position.x = ix * SEPARATION - AMOUNTX * SEPARATION / 2
+            particle.position.z = iy * SEPARATION - AMOUNTY * SEPARATION / 2
+            scene.add(particle)
           }
         }
-        count = 0;
-        container.appendChild(renderer.domElement);
-        document.addEventListener("mousemove", onDocumentMouseMove, false);
-        document.addEventListener("touchmove", onDocumentTouchMove, false);
+        count = 0
+        container.appendChild(renderer.domElement)
+        document.addEventListener('mousemove', onDocumentMouseMove, false)
+        document.addEventListener('touchmove', onDocumentTouchMove, false)
       }
       function onDocumentMouseMove(event) {
-        mouseX = event.clientX - windowHalfX;
-        mouseY = event.clientY - windowHalfY;
+        mouseX = event.clientX - windowHalfX
+        mouseY = event.clientY - windowHalfY
       }
       function onDocumentTouchMove(event) {
         if (event.touches.length == 1) {
-          event.preventDefault();
-          mouseX = event.touches[0].pageX - windowHalfX;
-          mouseY = event.touches[0].pageY - windowHalfY;
+          event.preventDefault()
+          mouseX = event.touches[0].pageX - windowHalfX
+          mouseY = event.touches[0].pageY - windowHalfY
         }
       }
       function loop() {
-        camera.position.x += (mouseX - camera.position.x) * 0.05;
-        camera.position.y = 364;
-        var i = 0;
+        camera.position.x += (mouseX - camera.position.x) * 0.05
+        camera.position.y = 364
+        var i = 0
         for (var ix = 0; ix < AMOUNTX; ix++) {
           for (var iy = 0; iy < AMOUNTY; iy++) {
-            particle = particles[i++];
+            particle = particles[i++]
             particle.position.y =
               Math.sin((ix + count) * 0.3) * 50 +
-              Math.sin((iy + count) * 0.5) * 50;
+              Math.sin((iy + count) * 0.5) * 50
             particle.scale.x = particle.scale.y =
               (Math.sin((ix + count) * 0.3) + 1) * 2 +
-              (Math.sin((iy + count) * 0.5) + 1) * 2;
+              (Math.sin((iy + count) * 0.5) + 1) * 2
           }
         }
-        renderer.render(scene, camera);
-        count += 0.1;
+        renderer.render(scene, camera)
+        count += 0.1
       }
     }
   },
   beforeDestroy() {
-    const that = this;
-    if (that.interval) clearInterval(that.interval);
+    const that = this
+    if (that.interval) clearInterval(that.interval)
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
