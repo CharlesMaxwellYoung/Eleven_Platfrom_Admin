@@ -1,9 +1,9 @@
 <template>
   <div class="console-sidebar">
     <el-menu :unique-opened='true' :router='true' theme="dark" :default-active="defaultActive" class="sidebar-content">
-      <div class="sidebar-fold">版本1.0.0</div>
+      <div class="sidebar-fold">V1.0.0</div>
       <el-menu-item index="/quick">
-        <i class="el-icon-message"></i>快速入门</el-menu-item>
+        <i class="material-icons" style="font-size:14px">home</i> &nbsp; &nbsp;平台状态</el-menu-item>
       <el-submenu index="base">
         <template slot="title">
           <i class="el-icon-message"></i>
@@ -42,6 +42,7 @@ export default {
     font-size: 12px;
     height: 46px;
     line-height: 46px;
+    color: #fff;
   }
   .el-submenu {
     background: #37424f;
@@ -61,7 +62,7 @@ export default {
     &.is-active {
       border-right: none;
       color: #fff;
-      background: #0099cc !important;
+      background: #409eff !important;
       &:hover {
         background: #0099cc !important;
       }

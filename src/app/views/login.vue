@@ -82,8 +82,11 @@ export default {
       })
       if (res.success) {
         that.$router.push({ path: '/quick' })
+        let { result: { userName, sysDate } } = res
+        sessionStorage.setItem('userName', userName)
       } else {
         that.$message.error(res.error)
+        sessionStorage.removeItem('userName')
       }
     },
     init3D() {

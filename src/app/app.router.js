@@ -22,7 +22,7 @@ const router = new Router({
                     name: 'Quick',
                     component: Quick,
                     meta: {
-                        bcrumd: ['快速入门']
+                        bcrumd: ['平台状态']
                     }
                 }
             ]

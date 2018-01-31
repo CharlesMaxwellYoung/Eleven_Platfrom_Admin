@@ -3,7 +3,7 @@
     <el-col :xs="12" :sm="12" :md="12" :lg="12">
       <a class="topbar-home" target="_blank" href="javascript:void(0);"></a>
       <a href="javascript:void(0);" target="_self" class="topbar-home-link">
-        <span>CONSOLE PANEL</span>
+        <span>终端管理平台</span>
       </a>
     </el-col>
     <el-col :xs="12" :sm="12" :md="12" :lg="12">
@@ -56,7 +56,7 @@ export default {
   font-size: 12px;
   width: 100%;
   .el-col {
-    background: #09c;
+    background: #409eff;
     height: 50px;
     color: #fff;
     font-size: 14px;
@@ -65,7 +65,7 @@ export default {
       position: relative;
       display: block;
       width: 50px;
-      background: #0087b4;
+      background: #409eff;
       font-size: 28px;
       color: #fff;
       text-align: center;
@@ -103,7 +103,7 @@ export default {
       height: 50px;
       display: block;
       z-index: 2;
-      background: #09c;
+      background: #409eff;
       color: #fff;
       font-size: 14px;
       border-left: 1px solid #008fbf;

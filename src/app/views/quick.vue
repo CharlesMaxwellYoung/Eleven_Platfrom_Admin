@@ -1,33 +1,203 @@
-<style lang="scss">
-.quick-container {
-  .quick-card {
-    .el-card__header {
-      padding: 0 20px;
-      height: 48px;
-      line-height: 48px;
-      text-align: center;
+<template>
+  <div class="quick-container">
+    <el-row>
+      <el-col :span="8">
+        <el-card class="quick-card">
+          <div slot="header" class="clearfix">
+            <span class="user-name-title">{{userName}}</span>
+          </div>
+          <div>
+            <span class="sysdate-time">登录时间:</span>
+            <span class="sysdate-content">{{sysDate}}</span>
+          </div>
+          <div>
+            <span class="sysdate-time">登录Ip:</span>
+            <span class="sysdate-content">{{systemIp}}</span>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="16">
+        <el-row>
+          <el-col :span="8">
+            <el-card class="quick-card">
+              <div class="user-card">
+                <i class="material-icons">
+                  person</i>
+                <div class="user-card-content">
+                  <p class="user-counts">
+                    {{userCounts}}
+                  </p>
+                  <p class="user-count-title">
+                    用户个数
+                  </p>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="8">
+            <el-card class="quick-card">
+              <div class="role-card">
+                <i class="material-icons">
+                  perm_contact_calendar</i>
+                <div class="role-card-content">
+                  <p class="role-counts">
+                    {{roleCouns}}
+                  </p>
+                  <p class="role-count-title">
+                    角色个数
+                  </p>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="8">
+            <el-card class="quick-card">
+              <div class="perms-card">
+                <i class="material-icons">
+                  lock</i>
+                <div class="perms-card-content">
+                  <p class="perms-counts">
+                    {{permissionCounts}}
+                  </p>
+                  <p class="perms-count-title">
+                    权限个数
+                  </p>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+
+<script>
+import UserApi from '~/app/services/loginServices'
+export default {
+  data() {
+    return {
+      userCounts: 0,
+      roleCouns: 0,
+      permissionCounts: 0,
+      userName: '',
+      sysDate: '',
+      systemIp: ''
     }
-    .el-step__description {
-      margin-top: 15px;
-      p {
-        line-height: 1.5;
+  },
+  methods: {
+    async getUserInfo() {
+      let userNormalInfo = await UserApi.getNormalInfo()
+      if (userNormalInfo.success) {
+        let {
+          result: { sysDate, userRolePermsCounts, ipAddress }
+        } = userNormalInfo
+
+        this.userCounts = userRolePermsCounts[0]
+        this.roleCouns = userRolePermsCounts[1]
+        this.permissionCounts = userRolePermsCounts[2]
+        this.systemIp = ipAddress
+        this.sysDate = sysDate
       }
-    }
+    },
+    refreshTime(sysDate) {}
+  },
+  created() {
+    this.getUserInfo()
+    this.userName = sessionStorage.getItem('userName')
   }
 }
-</style>
-
-<style lang="scss" scoped>
+</script>
+<style scoped lang="scss" >
 .quick-container {
-  .quick-user--count {
-    width: 100px;
-  }
-  .quick-card-user {
-    color: white;
-    background-color: rgb(45, 140, 240);
-  }
   .quick-card {
     margin: 0px 10px 10px 10px;
+    .user-name-title {
+      font-size: 2em;
+      color: #2d8cf0;
+    }
+    .sysdate-time {
+      font-weight: 500;
+      color: #c8c8c8;
+    }
+    .sysdate-content {
+      float: right;
+    }
+    .user-card {
+      position: relative;
+      .material-icons {
+        font-size: 66px;
+        color: #409eff;
+      }
+      .user-card-content {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        .user-counts {
+          margin: 0;
+          font-size: 30px;
+          color: #409eff;
+          width: 100%;
+          text-align: center;
+        }
+        .user-count-title {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 500;
+          color: #c8c8c8;
+        }
+      }
+    }
+    .role-card {
+      position: relative;
+      .material-icons {
+        font-size: 66px;
+        color: #67c23a;
+      }
+      .role-card-content {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        .role-counts {
+          margin: 0;
+          font-size: 30px;
+          color: #67c23a;
+          width: 100%;
+          text-align: center;
+        }
+        .role-count-title {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 500;
+          color: #c8c8c8;
+        }
+      }
+    }
+    .perms-card {
+      position: relative;
+      .material-icons {
+        font-size: 66px;
+        color: #e6a23c;
+      }
+      .perms-card-content {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        .perms-counts {
+          margin: 0;
+          font-size: 30px;
+          color: #e6a23c;
+          width: 100%;
+          text-align: center;
+        }
+        .perms-count-title {
+          margin: 0;
+          font-size: 12px;
+          font-weight: 500;
+          color: #c8c8c8;
+        }
+      }
+    }
     .github-star {
       float: right;
       color: #108ee9;
@@ -44,87 +214,3 @@
   }
 }
 </style>
-<template>
-  <div class="quick-container">
-    <el-row>
-      <el-col :span="8">
-        <el-card class="quick-card">
-          <div slot="header" class="clearfix">
-            <span>用户姓名</span>
-          </div>
-          <div>
-            {{'列表内容 '}}
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="16">
-        <el-row>
-          <el-col :span="8">
-            <el-card class="quick-card quick-card-user">
-              <div slot="header" class="clearfix header-user">
-                <span>
-                  <i class="material-icons md-48">
-                    person</i>
-                </span>
-              </div>
-              <div>
-                {{'列表内容 '}}
-              </div>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card class="quick-card">
-              <div slot="header" class="clearfix">
-                <span>
-                  <i class="material-icons md-48">
-                    person</i>
-                </span>
-              </div>
-              <div>
-                {{'列表内容 '}}
-              </div>
-            </el-card>
-          </el-col>
-          <el-col :span="8">
-            <el-card class="quick-card">
-              <div slot="header" class="clearfix">
-                <span>用户姓名</span>
-              </div>
-              <div>
-                {{'列表内容 '}}
-              </div>
-            </el-card>
-          </el-col>
-        </el-row>
-      </el-col>
-    </el-row>
-  </div>
-</template>
-
-<script>
-export default {
-  data() {
-    return {
-      active: 1
-    }
-  },
-  methods: {
-    prev() {
-      // 上一步
-      const that = this
-      if (that.active-- < 2) that.active = 1
-    },
-    next() {
-      // 下一步
-      const that = this
-      if (that.active++ > 2) that.active = 3
-    },
-    finish() {
-      // 完成
-      const that = this
-      that.active = 1
-      that.$message.success('恭喜您，大牛！')
-    }
-  }
-}
-</script>
