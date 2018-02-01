@@ -1,16 +1,16 @@
 <template>
   <div class="console-sidebar">
-    <el-menu :unique-opened='true' :router='true' theme="dark" :default-active="defaultActive" class="sidebar-content">
+    <el-menu :unique-opened='true' :router='true' :default-active="defaultActive" class="sidebar-content">
       <div class="sidebar-fold">V1.0.0</div>
       <el-menu-item index="/quick">
         <i class="material-icons" style="font-size:14px">home</i> &nbsp; &nbsp;平台状态</el-menu-item>
       <el-submenu index="base">
         <template slot="title">
           <i class="el-icon-message"></i>
-          基础服务
+          权限管理
         </template>
-        <el-menu-item index="/thrmenu/article">
-          <i class="el-icon-document"></i>三级菜单</el-menu-item>
+        <el-menu-item index="/users">
+          <i class="el-icon-document"></i>用户管理</el-menu-item>
       </el-submenu>
       <el-submenu index="user">
         <template slot="title">

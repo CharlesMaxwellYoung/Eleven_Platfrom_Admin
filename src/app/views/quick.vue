@@ -4,7 +4,9 @@
       <el-col :span="8">
         <el-card class="quick-card">
           <div slot="header" class="clearfix">
+            <img src="../../assets/logo.png" class="image">
             <span class="user-name-title">{{userName}}</span>
+            <span class="user-role-title">{{userName}}</span>
           </div>
           <div>
             <span class="sysdate-time">登录时间:</span>
@@ -74,6 +76,7 @@
 
 <script>
 import UserApi from '~/app/services/loginServices'
+import Session from '~/app/services/sessionServices'
 export default {
   data() {
     return {
@@ -104,7 +107,7 @@ export default {
   },
   created() {
     this.getUserInfo()
-    this.userName = sessionStorage.getItem('userName')
+    this.userName = Session.get('userName')
   }
 }
 </script>
@@ -112,9 +115,20 @@ export default {
 .quick-container {
   .quick-card {
     margin: 0px 10px 10px 10px;
+    .image {
+      width: 96px;
+      height: 96px;
+      vertical-align: middle;
+    }
     .user-name-title {
       font-size: 2em;
       color: #2d8cf0;
+      font-weight: 900;
+    }
+    .user-role-title {
+      font-size: 12px;
+      color: #c8c8c8;
+      text-align: center;
     }
     .sysdate-time {
       font-weight: 500;
@@ -139,6 +153,7 @@ export default {
           color: #409eff;
           width: 100%;
           text-align: center;
+          font-weight: 900;
         }
         .user-count-title {
           margin: 0;
@@ -164,6 +179,7 @@ export default {
           color: #67c23a;
           width: 100%;
           text-align: center;
+          font-weight: 900;
         }
         .role-count-title {
           margin: 0;
@@ -189,6 +205,7 @@ export default {
           color: #e6a23c;
           width: 100%;
           text-align: center;
+          font-weight: 900;
         }
         .perms-count-title {
           margin: 0;

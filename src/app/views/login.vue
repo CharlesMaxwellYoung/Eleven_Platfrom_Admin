@@ -27,6 +27,7 @@
 <script>
 import THREE from '~/app/lib/three'
 import UserApi from '~/app/services/loginServices'
+import Session from '~/app/services/sessionServices'
 export default {
   name: 'login',
   data() {
@@ -81,12 +82,14 @@ export default {
         userPassword: password
       })
       if (res.success) {
-        that.$router.push({ path: '/quick' })
         let { result: { userName, sysDate } } = res
-        sessionStorage.setItem('userName', userName)
+        Session.put('userName', userName)
+        Session.put('isLogin', true)
+        that.$router.push({ path: '/quick' })
       } else {
         that.$message.error(res.error)
-        sessionStorage.removeItem('userName')
+        Session.remove('userName')
+        Session.remove('isLogin')
       }
     },
     init3D() {

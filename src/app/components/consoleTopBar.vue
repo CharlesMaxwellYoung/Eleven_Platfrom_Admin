@@ -22,12 +22,14 @@
   </el-row>
 </template>
 <script>
+import userService from '~/app/services/loginServices'
+import sessionService from '~/app/services/sessionServices'
 export default {
   data() {
     return {}
   },
   methods: {
-    handleCommand(command) {
+    async handleCommand(command) {
       // 点击菜单项触发的事件回调
       const that = this
       if (command == 'signOut') {
@@ -35,11 +37,11 @@ export default {
         let $sto = that.$sto
         let $conf = that.$conf
         let cookies = $sto.get($conf.constant.cookie)
-        if (cookies && cookies.token) {
-          delete cookies.token
+        let userLoginOut = await userService.userLoginOut()
+        if (userLoginOut.success || sessionService.get('isLogin')) {
+          sessionService.remove('isLogin')
         }
-        $sto.set($conf.constant.cookie, cookies)
-        that.$router.push({ path: $conf.route.login })
+        that.$router.push({ path: '/login' })
       }
     }
   }
