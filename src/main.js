@@ -7,11 +7,13 @@ import axios from 'axios'
 import router from '~/app/app.router'
 import Sto from 'store'
 import Config from '~/app/config/index'
+import * as moment from 'moment'
 Vue.use(ElementUI)
 Vue.prototype.$http = axios
 Vue.prototype.$sto = Sto;
 Vue.prototype.$loading = loading
 Vue.prototype.$conf = Config
+Vue.prototype.$moment = moment
 
 new Vue({
   el: '#app',

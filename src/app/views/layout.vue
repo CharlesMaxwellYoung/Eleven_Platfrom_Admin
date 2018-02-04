@@ -33,12 +33,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .console-body {
-  position: absolute;
   width: 100%;
   left: 0px;
   top: 0px;
   bottom: 0px;
-  background-color: #eff2f7;
   z-index: 100;
   overflow-x: hidden;
   overflow-y: auto;

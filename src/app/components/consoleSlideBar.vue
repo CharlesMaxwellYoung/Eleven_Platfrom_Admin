@@ -42,7 +42,7 @@ export default {
     font-size: 12px;
     height: 46px;
     line-height: 46px;
-    color: #fff;
+    color: #409eff;
   }
   .el-submenu {
     background: #37424f;
@@ -59,6 +59,7 @@ export default {
     font-size: 12px;
     height: 42px;
     line-height: 42px;
+    color: #409eff;
     &.is-active {
       border-right: none;
       color: #fff;
