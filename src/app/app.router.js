@@ -4,6 +4,7 @@ import login from '~/app/views/login.vue'
 import Layout from '~/app/views/layout.vue'
 import Quick from '~/app/views/quick.vue'
 import Users from '~/app/views/users.vue'
+import Roles from '~/app/views/roles.vue'
 import Session from '~/app/services/sessionServices'
 Vue.use(Router)
 
@@ -37,6 +38,15 @@ const router = new Router({
                     component: Users,
                     meta: {
                         bcrumd: ['用户列表'],
+                        requireAuth: true
+                    }
+                },
+                {
+                    path: '/roles',
+                    name: 'roles',
+                    component: Roles,
+                    meta: {
+                        bcrumd: ['角色列表'],
                         requireAuth: true
                     }
                 }

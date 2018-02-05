@@ -3,14 +3,17 @@
     <el-menu :unique-opened='true' :router='true' :default-active="defaultActive" class="sidebar-content">
       <div class="sidebar-fold">V1.0.0</div>
       <el-menu-item index="/quick">
-        <i class="material-icons" style="font-size:14px">home</i> &nbsp; &nbsp;平台状态</el-menu-item>
+        <i class="material-icons">home</i>平台状态</el-menu-item>
       <el-submenu index="base">
         <template slot="title">
-          <i class="el-icon-message"></i>
-          权限管理
+          <i class="material-icons">lock</i>权限管理
         </template>
         <el-menu-item index="/users">
-          <i class="el-icon-document"></i>用户管理</el-menu-item>
+          <i class="material-icons">person</i>用户管理</el-menu-item>
+        <el-menu-item index="/roles">
+          <i class="material-icons">perm_contact_calendar</i>角色管理</el-menu-item>
+        <el-menu-item index="/perms">
+          <i class="material-icons">lock</i>权限管理</el-menu-item>
       </el-submenu>
       <el-submenu index="user">
         <template slot="title">
@@ -72,6 +75,10 @@ export default {
 }
 </style>
 <style scoped lang="scss">
+.material-icons {
+  font-size: 14px;
+  margin-right: 15px;
+}
 .console-sidebar {
   position: fixed;
   top: 50px;

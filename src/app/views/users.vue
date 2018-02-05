@@ -10,7 +10,7 @@
           <el-table-column fixed="left" type="index" width="50">
           </el-table-column>
 
-          <el-table-column fixed prop="id" label="用户表的ID" width="200">
+          <el-table-column fixed prop="id" label="用户表的ID" width="80">
           </el-table-column>
 
           <el-table-column prop="userShowName" label="用户显示名" width="200" sortable>
@@ -136,6 +136,7 @@ export default {
       this.dialogForm.id = editUser.id
       this.dialogForm.userPassword = editUser.userPassword
       this.diaLoginVisible = true
+      this.dialogForm.userDesc = editUser.userDesc
     },
     deleteUser(delUser) {
       this.dialogName = '删除用户'
@@ -144,11 +145,13 @@ export default {
       this.dialogForm.id = delUser.id
     },
     openAddUserDialog() {
+      this.dialogName = '添加用户'
       this.diaLoginVisible = true
       this.isAddUserFlag = true
       this.dialogForm.userName = ''
       this.dialogForm.userShowName = ''
       this.dialogForm.userPassword = ''
+      this.dialogForm.userDesc = ''
     },
     closeDialog() {
       this.diaLoginVisible = false
