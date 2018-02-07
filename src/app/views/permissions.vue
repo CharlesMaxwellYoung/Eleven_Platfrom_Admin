@@ -2,21 +2,21 @@
   <div class="quick-container">
     <el-card class="quick-card">
       <div slot="header">
-        <span>角色列表</span>
-        <el-button size="mini" class="add-user__button" type="primary" @click="openAddRoleDialog()">角色添加</el-button>
+        <span>权限列表</span>
+        <el-button size="mini" class="add-user__button" type="primary" @click="openAddRoleDialog()">权限添加</el-button>
       </div>
       <div class="card-text">
-        <el-table :data="roles" style="width: 100%" height="500" border stripe>
+        <el-table :data="perms" style="width: 100%" height="500" border stripe>
           <el-table-column fixed="left" type="index" width="50">
           </el-table-column>
 
-          <el-table-column fixed prop="id" label="角色表的ID" width="80">
+          <el-table-column fixed prop="id" label="权限表的ID" width="80">
           </el-table-column>
 
-          <el-table-column prop="roleName" label="角色名" width="200" sortable>
+          <el-table-column prop="permissionName" label="权限名" width="200" sortable>
           </el-table-column>
 
-          <el-table-column prop="roleDesc" label="描述" sortable>
+          <el-table-column prop="permissionDesc" label="描述" sortable>
           </el-table-column>
           <el-table-column label="创建时间" width="200" sortable>
             <template slot-scope="scope">
@@ -44,11 +44,11 @@
     </el-card>
     <el-dialog :title="dialogName" :visible.sync="diaLoginVisible" width="30%" center>
       <el-form :model="dialogForm" :rules="rules" ref="ruleForm" label-width="100px">
-        <el-form-item label="角色名" prop="roleName">
-          <el-input v-model="dialogForm.roleName" auto-complete="off"></el-input>
+        <el-form-item label="权限名" prop="permissionName">
+          <el-input v-model="dialogForm.permissionName" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="描述">
-          <el-input type="textarea" v-model="dialogForm.roleDesc"></el-input>
+        <el-form-item label="权限描述">
+          <el-input type="textarea" v-model="dialogForm.permissionDesc"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -66,12 +66,12 @@
   </div>
 </template>
 <script>
-import RoleApi from '~/app/services/userServices'
+import PermApi from '~/app/services/userServices'
 export default {
-  name: 'roles',
+  name: 'permission',
   data() {
     return {
-      roles: [],
+      perms: [],
       dialogName: '',
       diaLoginVisible: false,
       isAddRoleFlag: false,
@@ -79,11 +79,11 @@ export default {
       readyDelUserName: '',
       dialogForm: {
         id: 0,
-        roleName: '',
-        roleDesc: ''
+        permissionName: '',
+        permissionDesc: ''
       },
       rules: {
-        roleName: [
+        permissionName: [
           { required: true, message: '请输入角色名', trigger: 'blur' },
           { min: 3, message: '至少三个字符', trigger: 'blur' }
         ]
@@ -91,28 +91,28 @@ export default {
     }
   },
   created() {
-    this.getRoles()
+    this.getPermission()
   },
   methods: {
     openAddRoleDialog() {
-      this.dialogName = '添加角色'
+      this.dialogName = '添加权限'
       this.diaLoginVisible = true
       this.isAddRoleFlag = true
-      this.dialogForm.roleName = ''
-      this.dialogForm.roleDesc = ''
+      this.dialogForm.permissionName = ''
+      this.dialogForm.permissionDesc = ''
     },
     editUser(editRole) {
-      this.dialogName = '编辑角色'
+      this.dialogName = '编辑权限'
       this.isAddRoleFlag = false
       this.diaLoginVisible = true
-      this.dialogForm.roleName = editRole.roleName
-      this.dialogForm.roleDesc = editRole.roleDesc
+      this.dialogForm.permissionName = editRole.permissionName
+      this.dialogForm.permissionDesc = editRole.permissionDesc
       this.dialogForm.id = editRole.id
     },
     deleteUser(editRole) {
-      this.dialogName = '删除角色'
+      this.dialogName = '删除权限'
       this.isDelConfirmDialog = true
-      this.readyDelUserName = editRole.userName
+      this.readyDelUserName = editRole.permissionName
       this.dialogForm.id = editRole.id
     },
     closeDialog() {
@@ -133,56 +133,56 @@ export default {
       }
     },
     async __delRoleToServices() {
-      let delUserResp = await RoleApi.delRole({ id: this.dialogForm.id })
+      let delUserResp = await PermApi.delPerm({ id: this.dialogForm.id })
       let { success, error } = delUserResp
       this.$message({
-        message: success ? '删除角色成功' : error,
+        message: success ? '删除权限成功' : error,
         type: success ? 'success' : 'warning'
       })
-      this.getRoles()
+      this.getPermission()
       this.closeDialog()
     },
     __editRoleToService() {
       this.$refs.ruleForm.validate(async values => {
         if (values) {
-          let { roleName, roleDesc, id } = this.dialogForm
-          let RoleUpdate = await RoleApi.editRole({
-            roleName,
-            roleDesc,
+          let { permissionName, permissionDesc, id } = this.dialogForm
+          let RoleUpdate = await PermApi.editPerm({
+            permissionName,
+            permissionDesc,
             id
           })
           let { success, error } = RoleUpdate
           this.$message({
-            message: success ? '编辑角色成功' : 'error',
+            message: success ? '编辑权限成功' : 'error',
             type: success ? 'success' : 'warning'
           })
           this.diaLoginVisible = false
-          this.getRoles()
+          this.getPermission()
         }
       })
     },
     __addRoleToServices() {
       this.$refs.ruleForm.validate(async values => {
         if (values) {
-          let { roleName, roleDesc } = this.dialogForm
-          let roleAddResp = await RoleApi.addRole({
-            roleName,
-            roleDesc
+          let { permissionName, permissionDesc } = this.dialogForm
+          let roleAddResp = await PermApi.addPerm({
+            permissionName,
+            permissionDesc
           })
           let { success, error } = roleAddResp
           this.$message({
-            message: success ? '添加角色成功' : error,
+            message: success ? '添加权限成功' : error,
             type: success ? 'success' : 'warning'
           })
           this.diaLoginVisible = false
-          this.getRoles()
+          this.getPermission()
         }
       })
     },
-    async getRoles() {
-      let getRoleApi = await RoleApi.getRoles()
-      this.roles = getRoleApi.result
-      _.each(this.roles, roleItem => {
+    async getPermission() {
+      let getRoleApi = await PermApi.getPerm()
+      this.perms = getRoleApi.result
+      _.each(this.perms, roleItem => {
         roleItem.gmtCreate = this.$moment(roleItem.gmtCreate).format(
           'YYYY-MM-DD hh:mm:ss'
         )

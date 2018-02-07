@@ -5,6 +5,7 @@ import Layout from '~/app/views/layout.vue'
 import Quick from '~/app/views/quick.vue'
 import Users from '~/app/views/users.vue'
 import Roles from '~/app/views/roles.vue'
+import Perms from '~/app/views/permissions.vue'
 import Session from '~/app/services/sessionServices'
 Vue.use(Router)
 
@@ -47,6 +48,15 @@ const router = new Router({
                     component: Roles,
                     meta: {
                         bcrumd: ['角色列表'],
+                        requireAuth: true
+                    }
+                },
+                {
+                    path: '/perms',
+                    name: 'perms',
+                    component: Perms,
+                    meta: {
+                        bcrumd: ['权限列表'],
                         requireAuth: true
                     }
                 }

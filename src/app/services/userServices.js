@@ -39,5 +39,24 @@ class UserServices extends Vue {
         return this.$http.post(this.$conf.target + '/role/deleteRole', roleDo)
             .then(resp => resp.data)
     }
+    getPerm() {
+        return this.$http.get(this.$conf.target + '/permission/getPerm')
+            .then(resp => resp.data)
+    }
+
+    addPerm(PermDo) {
+        return this.$http.post(this.$conf.target + '/permission/addPerm', PermDo)
+            .then(resp => resp.data)
+    }
+
+    editPerm(PermDo) {
+        return this.$http.post(this.$conf.target + '/permission/updatePerm', PermDo)
+            .then(resp => resp.data)
+    }
+
+    delPerm(PermDo) {
+        return this.$http.post(this.$conf.target + '/permission/deletePerm', PermDo)
+            .then(resp => resp.data)
+    }
 }
 export default new UserServices();
