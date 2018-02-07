@@ -58,5 +58,10 @@ class UserServices extends Vue {
         return this.$http.post(this.$conf.target + '/permission/deletePerm', PermDo)
             .then(resp => resp.data)
     }
+
+    getRoleNameByUserName(userName) {
+        return this.$http.get(this.$conf.target + `/user/roleNameByUserName?userName=${userName}`)
+            .then(resp => resp.data)
+    }
 }
 export default new UserServices();

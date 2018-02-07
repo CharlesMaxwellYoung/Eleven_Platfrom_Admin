@@ -6,7 +6,7 @@
         <i class="material-icons">home</i>平台状态</el-menu-item>
       <el-submenu index="base">
         <template slot="title">
-          <i class="material-icons">lock</i>权限管理
+          <i class="material-icons">lock</i>用户权限模块
         </template>
         <el-menu-item index="/users">
           <i class="material-icons">person</i>用户管理</el-menu-item>
@@ -14,6 +14,8 @@
           <i class="material-icons">perm_contact_calendar</i>角色管理</el-menu-item>
         <el-menu-item index="/perms">
           <i class="material-icons">lock</i>权限管理</el-menu-item>
+        <el-menu-item index="/rabc">
+          <i class="material-icons">link</i>权限对应关系</el-menu-item>
       </el-submenu>
       <el-submenu index="user">
         <template slot="title">
@@ -63,6 +65,7 @@ export default {
     height: 42px;
     line-height: 42px;
     color: #409eff;
+    background-color: #f2f6fc;
     &.is-active {
       border-right: none;
       color: #fff;

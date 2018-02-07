@@ -6,6 +6,7 @@ import Quick from '~/app/views/quick.vue'
 import Users from '~/app/views/users.vue'
 import Roles from '~/app/views/roles.vue'
 import Perms from '~/app/views/permissions.vue'
+import Rabc from '~/app/views/rabc.vue'
 import Session from '~/app/services/sessionServices'
 Vue.use(Router)
 
@@ -57,6 +58,15 @@ const router = new Router({
                     component: Perms,
                     meta: {
                         bcrumd: ['权限列表'],
+                        requireAuth: true
+                    }
+                },
+                {
+                    path: '/rabc',
+                    name: 'rabc',
+                    component: Rabc,
+                    meta: {
+                        bcrumd: ['对应关系'],
                         requireAuth: true
                     }
                 }

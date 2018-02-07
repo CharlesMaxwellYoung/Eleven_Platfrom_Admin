@@ -78,7 +78,7 @@
 </template>
 <script>
 import UserApi from '~/app/services/userServices'
-import * as _ from 'underscore'
+
 export default {
   name: 'users',
   data() {

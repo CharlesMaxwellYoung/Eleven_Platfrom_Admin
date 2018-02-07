@@ -19,9 +19,5 @@ class UserApi extends Vue {
             .then(resp => resp.data);
     }
 
-    getUsers() {
-        return this.$http.get(this.$conf.target + '/user/getUsers')
-            .then(resp => resp.data);
-    }
 }
 export default new UserApi();
