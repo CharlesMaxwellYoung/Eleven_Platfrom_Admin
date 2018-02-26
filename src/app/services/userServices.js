@@ -63,5 +63,15 @@ class UserServices extends Vue {
         return this.$http.get(this.$conf.target + `/user/roleNameByUserName?userName=${userName}`)
             .then(resp => resp.data)
     }
+
+    getPermissionByRoleId(roleId) {
+        return this.$http.get(this.$conf.target + `/user/getPermissionByRoleId?roleId=${roleId}`)
+            .then(resp => resp.data)
+    }
+
+    setRabcLink(rabcItem) {
+        return this.$http.post(this.$conf.target + '/user/updatePermissionLink', rabcItem)
+            .then(resp => resp.data)
+    }
 }
 export default new UserServices();

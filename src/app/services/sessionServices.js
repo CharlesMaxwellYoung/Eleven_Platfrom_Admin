@@ -1,5 +1,5 @@
 import * as crypto from 'crypto-js'
-import * as _ from 'lodash'
+import * as _ from 'underscore'
 
 class SessionService {
     constructor() {

@@ -67,6 +67,7 @@
 </template>
 <script>
 import PermApi from '~/app/services/userServices'
+import * as _ from 'underscore'
 export default {
   name: 'permission',
   data() {
